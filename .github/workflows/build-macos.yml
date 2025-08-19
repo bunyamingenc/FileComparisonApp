@@ -16,19 +16,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      - name: Build app with PyInstaller
+      - name: Build app
         run: |
-          pyinstaller --noconfirm --onefile --windowed --icon=icon.icns main.py
+          pyinstaller --onefile --windowed --icon=icon.icns FileComparison.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: macos-build
-          path: dist/*
+          name: FileComparison-macOS
+          path: dist/FileComparison.app
