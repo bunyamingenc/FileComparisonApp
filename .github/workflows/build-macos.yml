@@ -2,36 +2,33 @@ name: Build macOS App
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  build-macos:
+  build:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install PyInstaller
-        run: pip install pyinstaller
-
-      - name: Build macOS app
+      - name: Install dependencies
         run: |
-          pyinstaller --onefile --windowed --icon=myicon.icns FileComparison.py
-          ls dist/
+          python -m pip install --upgrade pip
+          pip install pyinstaller
 
-          - name: Upload artifacts
-  uses: actions/upload-artifact@v4
-  with:
-    name: build
-    path: dist/*
+      - name: Build app with PyInstaller
+        run: |
+          pyinstaller --noconfirm --onefile --windowed --icon=icon.icns main.py
 
-
-   
-
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build
+          path: dist/*
