@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11'   # PyInstaller için daha stabil
 
       - name: Install dependencies
         run: |
@@ -25,4 +25,11 @@ jobs:
 
       - name: Build app
         run: |
-          pyinstaller --onefile --windowed --clean
+          pyinstaller --onefile --windowed --clean --noconfirm \
+            --icon=iconformac.icns FileComparison.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FileComparison-macOS
+          path: dist/*
