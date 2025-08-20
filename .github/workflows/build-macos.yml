@@ -1,4 +1,4 @@
-name: Build macOS App
+name: Build macOS App and DMG
 
 on:
   push:
@@ -16,20 +16,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'   # PyInstaller için daha stabil
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      - name: Build app
+      - name: Build macOS app
         run: |
-          pyinstaller --onefile --windowed --clean --noconfirm \
-            --icon=iconformac.icns FileComparison.py
+          pyinstaller --onefile --windowed main.py --name FileComparison
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: FileComparison-macOS
-          path: dist/*
+      - name: Create DMG
+        run: |
+          mkdir dist_dmg
+          hdiutil create -volname "FileComparison" -srcfolder "dist" -ov -format
