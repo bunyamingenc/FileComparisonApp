@@ -23,16 +23,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      - name: Prepare dist folder
-        run: mkdir -p dist
-
       - name: Build macOS app
         run: |
-          # Minimal test için basit script kullanabilirsiniz
-          # pyinstaller --onefile main.py --name FileComparison
-          pyinstaller --onefile main.py --name FileComparison || true
-          # Build loglarını gör
-          cat dist/*.log || true
+          pyinstaller --onefile --windowed FileComparison.py --name FileComparison
 
       - name: Check dist folder
         run: ls -la dist
