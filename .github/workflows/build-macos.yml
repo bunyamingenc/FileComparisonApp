@@ -21,4 +21,29 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install pyinstaller
 
+      - name: Prepare dist folder
+        run: mkdir -p dist
+
+      - name: Build macOS app
+        run: |
+          # Minimal test için basit script kullanabilirsiniz
+          # pyinstaller --onefile main.py --name FileComparison
+          pyinstaller --onefile main.py --name FileComparison || true
+          # Build loglarını gör
+          cat dist/*.log || true
+
+      - name: Check dist folder
+        run: ls -la dist
+
+      - name: Create DMG
+        run: |
+          mkdir -p dist_dmg
+          hdiutil create -volname "FileComparison" -srcfolder "dist" -ov -format UDZO dist_dmg/FileComparison.dmg
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: FileComparison-macOS
+          path: dist_dmg/FileComparison.dmg
