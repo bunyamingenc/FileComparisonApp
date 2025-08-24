@@ -53,9 +53,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller
 
-      - name: Build macOS app
-        run: |
-          pyinstaller --onefile --windowed Updated_FileComp.py --name Updated_FileComp --icon=myicon.icns
+      - name: Build macOS app with icon
+  run: |
+    pyinstaller \
+      --onefile \
+      --windowed \
+      --name "Updated_FileComp" \
+      --icon "iconformac.icns" \
+      Updated_FileComp.py
 
       - name: Check dist folder
         run: ls -la dist
