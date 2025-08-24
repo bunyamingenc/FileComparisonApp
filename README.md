@@ -1,6 +1,3 @@
-# Updated_FileComp - macOS App Builder
-
-This project provides an automated workflow to build a macOS application from a Python script (`Updated_FileComp.py`) and package it as a DMG file using GitHub Actions. The workflow includes creating a standalone `.app` and generating a distributable `.dmg` for easy installation.
 
 ---
 
