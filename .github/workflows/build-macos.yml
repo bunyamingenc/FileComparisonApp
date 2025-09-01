@@ -28,9 +28,9 @@ jobs:
           pyinstaller \
             --onefile \
             --windowed \
-            --name "FileComparison 1.0" \
+            --name "FileComparison_1.0" \
             --icon "iconformac.icns" \
-            FileComparison 1.0
+            "FileComparison 1.0.py"
 
       - name: Check dist folder
         run: ls -la dist
@@ -38,12 +38,12 @@ jobs:
       - name: Create DMG
         run: |
           mkdir -p dist_dmg
-          hdiutil create -volname "FileComparison 1.0" \
+          hdiutil create -volname "FileComparison_1.0" \
             -srcfolder "dist" \
-            -ov -format UDZO dist_dmg/FileComparison 1.0.dmg
+            -ov -format UDZO "dist_dmg/FileComparison_1.0.dmg"
 
       - name: Upload DMG
         uses: actions/upload-artifact@v4
         with:
-          name: FileComparison 1.0-macOS
-          path: dist_dmg/FileComparison 1.0.dmg
+          name: FileComparison_1.0-macOS
+          path: dist_dmg/FileComparison_1.0.dmg
