@@ -12,8 +12,9 @@ def highlight_diff(line1, line2):
     res1, res2 = [], []
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
         if tag == "equal":
-            res1.append(line1[i1:i2])
-            res2.append(line2[j1:j2])
+            # Burada bile eşleşmeleri "değişmiş" gibi işaretle
+            res1.append(("red", line1[i1:i2]))
+            res2.append(("green", line2[j1:j2]))
         elif tag == "replace":
             res1.append(("red", line1[i1:i2]))
             res2.append(("green", line2[j1:j2]))
@@ -219,3 +220,4 @@ text1.bind("<KeyRelease>", compare_texts)
 text2.bind("<KeyRelease>", compare_texts)
 
 root.mainloop()
+
