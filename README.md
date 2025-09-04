@@ -43,6 +43,8 @@ python main.py
 
 ---
 
+##Screenshots
+![Dark Mode Example](https://github.com/bunyamingenc/FileComparisonApp/blob/694bab4638c09f9af00af6293fe55d42155b5c1c/dark_example.jpg)
 ## Building Executables
 
 Cross-platform builds are provided via GitHub Actions.
