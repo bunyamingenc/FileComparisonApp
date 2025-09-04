@@ -1,35 +1,42 @@
+Live File Comparison — Qt
 
----
+A desktop application for real-time, character-level text comparison. It highlights differences between two files (source vs. target) and supports dark/light themes, easy file loading, and saving changes. Built with Python 3 and PySide6 (Qt for Python).
 
-## Features
 
-- Automatically builds a standalone macOS application using **PyInstaller**.
-- Packages the app into a `.dmg` file using `hdiutil`.
-- Supports a custom app icon (`iconformac.icns`).
-- Fully automated on GitHub Actions upon pushing to the `main` branch.
+Features
 
----
+Compare two text files side by side.
 
-## Requirements
+Character-level diff highlighting:
 
-- Python 3.11
-- GitHub repository with the following files:
-  - `Updated_FileComp.py` (main Python script)
-  - `iconformac.icns` (app icon)
-- macOS runner (GitHub Actions uses `macos-latest`)
+Red = removed/mismatched in source
 
----
+Green = added/mismatched in target
 
-## Usage
+Gray = unchanged
 
-### GitHub Actions Workflow
+Dark/Light theme toggle.
 
-The workflow automatically executes the following steps:
+Load and save files directly from the toolbar.
 
-1. **Checkout repository**
-2. **Set up Python 3.11**
-3. **Install dependencies**
-   ```bash
-   python -m pip install --upgrade pip
-   pip install pyinstaller
+Clear all content with a single click.
 
+Automatic live comparison as you type.
+
+Installation
+Requirements
+
+Python 3.10+
+
+PySide6
+
+pip install PySide6
+
+Run from source
+git clone https://github.com/USERNAME/live-file-comparison.git
+cd live-file-comparison
+python main.py
+
+Building Executables
+
+This project provides cross-platform builds via GitHub Actions.
