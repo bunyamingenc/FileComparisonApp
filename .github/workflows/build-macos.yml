@@ -1,10 +1,10 @@
-name: Build macOS App and DMG
+name: Build macOS App and Zip
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  # manuel başlatmak için
+  workflow_dispatch:
 
 jobs:
   build-mac:
@@ -24,24 +24,30 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller PySide6
 
-      - name: Build macOS app with icon
+      - name: Install UPX
+        run: |
+          brew install upx
+
+      - name: Clean previous build
+        run: |
+          rm -rf build dist
+
+      - name: Build macOS app with UPX
         run: |
           pyinstaller \
             --onefile \
             --windowed \
             --name "FileComparison_1.0" \
-            --icon "iconformac.icns" \
+            --upx-dir /usr/local/bin \
             "FileComparison 1.0.py"
 
-      - name: Create DMG
+      - name: Compress .app to zip
         run: |
-          mkdir -p dist_dmg
-          hdiutil create -volname "FileComparison_1.0" \
-            -srcfolder "dist" \
-            -ov -format UDZO "dist_dmg/FileComparison_1.0.dmg"
+          mkdir -p dist_zip
+          zip -r dist_zip/FileComparison_1.0.zip dist/FileComparison_1.0.app
 
-      - name: Upload DMG
+      - name: Upload zip artifact
         uses: actions/upload-artifact@v4
         with:
           name: FileComparison_1.0-macOS
-          path: dist_dmg/FileComparison_1.0.dmg
+          path: dist_zip/FileComparison_1.0.zip
